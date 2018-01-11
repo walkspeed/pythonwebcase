@@ -2,16 +2,16 @@
 import web
 import session
 import request
-import code 
+import manager 
 
 urls = (
-    '/', code.login,
-    '/index', code.index,
-    '/loadmac',code.loadmac,
-    '/loaddev',code.loaddev,
+    '/', manager.login,
+    '/index', manager.index,
+    '/loadmac',manager.loadmac,
+    '/loaddev',manager.loaddev,
     '/request',request.reqk_app,
-    '/download/(.*)',code.download,
-    '/upload',code.upload
+    '/download/(.*)',manager.download,
+    '/upload',manager.upload
 )
 
 session.initSession( urls )
