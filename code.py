@@ -1,13 +1,11 @@
 # -*- coding:utf-8 -*-
 import web
 from web import form
-
+import session
 
 allowed = (
 	('admin','123456'),
 )
-
-session = web.session.Session(app, web.session.DiskStore('sessions'))
 
 render = web.template.render('templates/')
 
@@ -62,7 +60,7 @@ class login:
 		username = i.get('username')
 		passwd = i.get('passwd')
 		if (username,passwd) in allowed:
-			session.logged_in = True
+			session.getSession().logged_in = True
 			web.setcookie('system_mangement', '', 60)
 			raise web.seeother('/index')
 		else:

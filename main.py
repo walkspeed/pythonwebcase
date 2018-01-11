@@ -1,18 +1,20 @@
 # -*- coding:utf-8 -*-
 import web
+import session
 import request
+import code 
 
 urls = (
-    '/','login',
-    '/index', 'index',
-    '/loadmac','loadmac',
-    '/loaddev','loaddev',
+    '/', code.login,
+    '/index', code.index,
+    '/loadmac',code.loadmac,
+    '/loaddev',code.loaddev,
     '/request',request.reqk_app,
-    '/download/(.*)','download',
-    '/upload','upload'
+    '/download/(.*)',code.download,
+    '/upload',code.upload
 )
 
-app = web.application(urls, globals())
+session.initSession( urls )
 
 if __name__ == "__main__":
-    app.run()
+    session.getApp().run()
