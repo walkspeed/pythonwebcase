@@ -95,3 +95,6 @@ class request:
             return clirequest.response(cmdparse[1])
 
 reqk_app = web.application(requrls, locals())
+
+def addUrls( app ):
+    app.add_mapping( '/request', reqk_app )
