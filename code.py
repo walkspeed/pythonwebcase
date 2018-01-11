@@ -1,23 +1,12 @@
 # -*- coding:utf-8 -*-
 import web
 from web import form
-import request
 
-urls = (
-    '/','login',
-    '/index', 'index',
-    '/loadmac','loadmac',
-    '/loaddev','loaddev',
-    '/request',request.reqk_app,
-    '/download/(.*)','download',
-    '/upload','upload'
-)
 
 allowed = (
 	('admin','123456'),
 )
 
-app = web.application(urls, globals())
 session = web.session.Session(app, web.session.DiskStore('sessions'))
 
 render = web.template.render('templates/')
@@ -119,6 +108,3 @@ class upload:
             fout.write(x.myfile.file.read()) # writes the uploaded file to the newly created file.
             fout.close() # closes the file, upload complete.
         raise web.seeother('/upload')
-
-if __name__ == "__main__":
-    app.run()
