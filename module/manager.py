@@ -2,6 +2,8 @@
 import web
 from web import form
 import session
+import os
+import time
 
 allowed = (
 	('admin','123456'),
@@ -56,6 +58,10 @@ class loaddev:
         textarea = web.input()
         devs = textarea.get('devs')
         print '[loaddev.POST] devs : ', devs
+        os.rename('idfile','idfile'+str(time.time()))
+        mf = open('idfile','w')
+        mf.write(devs)
+        mf.close()
         raise web.seeother('/index')
 
 class login:
