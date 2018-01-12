@@ -51,6 +51,12 @@ class loaddev:
             self.devarr.append(line.replace("\n", ""))
 
         mapfile.close()
+    def POST(self):
+        print '[loaddev.POST] begin'
+        textarea = web.input()
+        devs = textarea.get('devs')
+        print '[loaddev.POST] devs : ', devs
+        raise web.seeother('/index')
 
 class login:
 	def GET(self):
