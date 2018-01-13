@@ -80,8 +80,8 @@ class cmd:
     def validMacarr( self ):
         print '[authservice.validMacarr] all arr : ', self.macarr
         for allotitem in self.mapdict.values():
-            print '[authservice.validMacarr] allotitem : ', allotitem
-            self.macarr.remove( allotitem )
+            if allotitem in self.macarr:
+                self.macarr.remove( allotitem )
         print '[authservice.validMacarr] valid : ', self.macarr
 
 

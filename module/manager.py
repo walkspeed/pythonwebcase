@@ -34,6 +34,16 @@ class loadmac:
             self.macarr.append(line.replace("\n", ""))
 
         macfile.close()
+    def POST(self):
+        print '[loaddev.POST] begin'
+        textarea = web.input()
+        devs = textarea.get('macs')
+        print '[loaddev.POST] macs : ', macs
+        os.rename('macfile','macfile'+time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time())))
+        mf = open('macfile','w')
+        mf.write(macs)
+        mf.close()
+        raise web.seeother('/index')
 
 class loaddev:
     def GET(self):
@@ -53,16 +63,6 @@ class loaddev:
             self.devarr.append(line.replace("\n", ""))
 
         mapfile.close()
-    def POST(self):
-        print '[loaddev.POST] begin'
-        textarea = web.input()
-        devs = textarea.get('devs')
-        print '[loaddev.POST] devs : ', devs
-        os.rename('idfile','idfile'+str(time.time()))
-        mf = open('idfile','w')
-        mf.write(devs)
-        mf.close()
-        raise web.seeother('/index')
 
 class login:
 	def GET(self):
