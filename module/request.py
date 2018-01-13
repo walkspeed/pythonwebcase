@@ -17,7 +17,10 @@ class cmd:
         requestitems = request.split(';')
         if hasattr( self, requestitems[0] ):
             operator = getattr(self,requestitems[0])
-            return operator(requestitems[1:])
+            if len(requestitems) < 2:
+                return operator()
+            else:
+                return operator(requestitems[1:])
         return None
 
     def authorize(self,param):
@@ -34,6 +37,11 @@ class cmd:
         authfile = open( self.idfile,'a' )
         authfile.write( param[0]+';'+retstr+'\n' )
         return retstr
+    def updata(self):
+        self.loadMacData()
+        self.validMacarr()
+        print '[cmd.updata] macarr[0] : ',self.macarr[0]
+        raise web.seeother('/index',True)
 
     def loadMacData( self ):
         self.inifile = 'macfile'

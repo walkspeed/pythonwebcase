@@ -43,7 +43,7 @@ class loadmac:
         mf = open('macfile','w')
         mf.write(macs)
         mf.close()
-        raise web.seeother('/index')
+        raise web.seeother('/request/cmd:updata')
 
 class loaddev:
     def GET(self):
