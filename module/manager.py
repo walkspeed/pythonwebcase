@@ -31,12 +31,14 @@ class loadmac:
             line = macfile.readline()
             if not line:
                 break
+            if len(line) < 4:
+                continue
             self.macarr.append(line.replace("\n", ""))
 
         macfile.close()
     def POST(self):
         textarea = web.input()
-        devs = textarea.get('macs')
+        macs = textarea.get('macs')
         os.rename('macfile','macfile'+time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time())))
         mf = open('macfile','w')
         mf.write(macs)

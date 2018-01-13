@@ -45,6 +45,8 @@ class cmd:
             line = macfile.readline()
             if not line:
                 break
+            if len(line) < 2:
+                continue
             self.macarr.append(line.replace("\n", ""))
         macfile.close()
 
