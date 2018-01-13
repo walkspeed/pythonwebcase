@@ -24,7 +24,6 @@ class cmd:
         if len(self.macarr) == 0:
             return ''
 
-        print '[authService.authorize] path : ', param[0]
         if param[0] in self.mapdict.keys():
             return self.mapdict[param[0]]
 
@@ -34,10 +33,6 @@ class cmd:
         self.mapdict[param[0]] = retstr
         authfile = open( self.idfile,'a' )
         authfile.write( param[0]+';'+retstr+'\n' )
-
-
-        print '[authService].authorize self.macarr : ',self.macarr
-
         return retstr
 
     def loadMacData( self ):
@@ -51,8 +46,6 @@ class cmd:
             if not line:
                 break
             self.macarr.append(line.replace("\n", ""))
-
-        print 'self.macarr : ',self.macarr
         macfile.close()
 
     def loadDeviceData( self ):
@@ -67,23 +60,18 @@ class cmd:
                 break
 
             line = line.replace('\n','')
-            print '[authservice.loadDeviceData] line : ', line
             devicInfo = line.split(';')
             if len(devicInfo) < 2:
                 return
 
             self.mapdict[devicInfo[0]] = devicInfo[1]
 
-        print 'self.mapdict : ',self.mapdict
         mapfile.close()
 
     def validMacarr( self ):
-        print '[authservice.validMacarr] all arr : ', self.macarr
         for allotitem in self.mapdict.values():
             if allotitem in self.macarr:
                 self.macarr.remove( allotitem )
-        print '[authservice.validMacarr] valid : ', self.macarr
-
 
 clirequest = cmd()
 

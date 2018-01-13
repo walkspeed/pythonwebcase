@@ -35,10 +35,8 @@ class loadmac:
 
         macfile.close()
     def POST(self):
-        print '[loaddev.POST] begin'
         textarea = web.input()
         devs = textarea.get('macs')
-        print '[loaddev.POST] macs : ', macs
         os.rename('macfile','macfile'+time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time())))
         mf = open('macfile','w')
         mf.write(macs)
@@ -119,6 +117,12 @@ class upload:
             fout.close() # closes the file, upload complete.
         raise web.seeother('/upload')
 
+class formtest:
+    def GET(self):
+        return "你什么到这里来啦"
+    def POST(self):
+        return "这就对啦"
+
 def addUrls( app ):
     app.add_mapping( '/', login )
     app.add_mapping('/index', index)
@@ -126,3 +130,4 @@ def addUrls( app ):
     app.add_mapping('/loaddev',loaddev)
     app.add_mapping('/download/(.*)',download)
     app.add_mapping('/upload',upload )
+    app.add_mapping('/formtest',formtest )
