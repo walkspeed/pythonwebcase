@@ -11,10 +11,13 @@ $def with(name)
 	<title>web简单模板</title>
 </head>
 <body>
+<form method="POST" action="">
 <textarea rows="20" cols="100" class="boxes" name="devs" readOnly="true">
 $for row in name:
     $row
 </textarea>
 <a href="/index"><h2>to index</h2></a>
+<input type="submit">
+</form>
 </body>
 </html>

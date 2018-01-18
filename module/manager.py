@@ -43,7 +43,7 @@ class loadmac:
         mf = open('macfile','w')
         mf.write(macs)
         mf.close()
-        raise web.seeother('/request/cmd:updata')
+        raise web.seeother('/request/cmd:updataMac')
 
 class loaddev:
     def GET(self):
@@ -63,6 +63,14 @@ class loaddev:
             self.devarr.append(line.replace("\n", ""))
 
         mapfile.close()
+    def POST(self):
+        textarea = web.input()
+        devs = textarea.get('devs')
+        os.rename('idfile','idfile'+time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time())))
+        mf = open('idfile','w')
+        mf.write(devs)
+        mf.close()
+        raise web.seeother('/request/cmd:updataDev')
 
 class login:
 	def GET(self):

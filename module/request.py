@@ -37,8 +37,14 @@ class cmd:
         authfile = open( self.idfile,'a' )
         authfile.write( param[0]+';'+retstr+'\n' )
         return retstr
-    def updata(self):
+    def updataMac(self):
         self.loadMacData()
+        self.validMacarr()
+        print '[cmd.updata] macarr[0] : ',self.macarr[0]
+        raise web.seeother('/index',True)
+
+    def updataDev(self):
+        self.loadDeviceData()
         self.validMacarr()
         print '[cmd.updata] macarr[0] : ',self.macarr[0]
         raise web.seeother('/index',True)
