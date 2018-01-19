@@ -33,7 +33,8 @@ class loadmac:
                 break
             if len(line) < 4:
                 continue
-            self.macarr.append(line.replace("\n", ""))
+
+            self.macarr.append(line)
 
         macfile.close()
     def POST(self):
@@ -60,7 +61,8 @@ class loaddev:
             line = mapfile.readline()
             if not line:
                 break
-            self.devarr.append(line.replace("\n", ""))
+
+            self.devarr.append(line)
 
         mapfile.close()
     def POST(self):

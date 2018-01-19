@@ -61,7 +61,9 @@ class cmd:
                 break
             if len(line) < 2:
                 continue
-            self.macarr.append(line.replace("\n", ""))
+            line = line.replace("\n", "")
+            line = line.replace("\r", "")
+            self.macarr.append(line)
         macfile.close()
 
     def loadDeviceData( self ):
@@ -76,6 +78,7 @@ class cmd:
                 break
 
             line = line.replace('\n','')
+            line = line.replace('\r','')
             devicInfo = line.split(';')
             if len(devicInfo) < 2:
                 return
