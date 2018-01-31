@@ -31,6 +31,7 @@ class cmd:
             return self.mapdict[param[0]]
 
         retstr = self.macarr[0]
+        print 'authorize retstr : ',retstr
         self.macarr = self.macarr[1:]
 
         self.mapdict[param[0]] = retstr
@@ -63,8 +64,11 @@ class cmd:
                 continue
             line = line.replace("\n", "")
             line = line.replace("\r", "")
+            if len(line) < 2:
+                continue
             self.macarr.append(line)
         macfile.close()
+        print 'loadMacData macarr : ',self.macarr
 
     def loadDeviceData( self ):
         self.idfile = 'idfile'

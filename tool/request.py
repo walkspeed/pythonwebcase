@@ -2,7 +2,7 @@
 import requests
 
 try:
-    response = requests.get('http://localhost:8080/request/cmd:authorize;1QZ7PUNTXJIL6VA9K58DMYS6')#('http://117.78.33.205:18080/request/cmd:authorize;1QZ7PUNTXJIL6VA9K58DMYS2')
+    response = requests.get('http://localhost:8080/request/cmd:authorize;33D65AF3FB7E97A8DBF6D425')#('http://117.78.33.205:18080/request/cmd:authorize;1QZ7PUNTXJIL6VA9K58DMYS2')
 except:
     print "response raise error"
 else:
