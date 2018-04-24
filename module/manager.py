@@ -135,6 +135,14 @@ class formtest:
     def POST(self):
         return "这就对啦"
 
+class edit:
+    def GET(self):
+        return
+    def POST(self):
+        textarea = web.input()
+        devs = textarea.get('tinyedit')
+        return devs
+
 def addUrls( app ):
     app.add_mapping( '/', login )
     app.add_mapping('/index', index)
@@ -143,3 +151,4 @@ def addUrls( app ):
     app.add_mapping('/download/(.*)',download)
     app.add_mapping('/upload',upload )
     app.add_mapping('/formtest',formtest )
+    app.add_mapping('/edit',edit)

@@ -43,5 +43,21 @@ def makeMacFromRange():
 
     mf.close()
 
+def makeMacFromRange2(formatstr,items,rangemax):
+    mf = open('macfile','w+')
+
+    a1 = int( items[1],16 )
+    a2 = int( items[0],16 )
+    for i in range(0,rangemax):
+        if a1 > 255:
+            a1 = 0
+            a2 = a2 + 1
+
+        strmac = formatstr % ( a2, a1 )
+        mf.write(strmac)
+        a1 = a1 + 1
+
+    mf.close()
+
 if __name__ == '__main__':
-    makeMacFromRange()
+    makeMacFromRange2('00:11:ad:83:%02x:%02x\n',['9c','c0'],1011)

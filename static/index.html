@@ -7,11 +7,12 @@
 <script type="text/javascript" src="tinyeditor.js"></script>
 </head>
 <body>
-<textarea id="input" style="width:400px; height:200px"></textarea>
+<form method=POST action="/edit">
+<textarea name="tinyedit" id="tinyedit" style="width:400px; height:200px"></textarea>
 <script type="text/javascript">
-new TINY.editor.edit('editor',{
-	id:'input',
-	width:584,
+var tinyedit = new TINY.editor.edit('editor',{
+	id:'tinyedit',
+	width:300,
 	height:175,
 	cssclass:'te',
 	controlclass:'tecontrol',
@@ -30,6 +31,12 @@ new TINY.editor.edit('editor',{
 	toggle:{text:'source',activetext:'wysiwyg',cssclass:'toggle'},
 	resize:{cssclass:'resize'}
 });
+function checkform()
+{
+	tinyedit.post();
+}
 </script>
+<input type="submit" onclick="checkform()">
+</form>
 </body>
 </html>
