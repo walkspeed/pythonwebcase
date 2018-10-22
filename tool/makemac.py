@@ -60,4 +60,4 @@ def makeMacFromRange2(formatstr,items,rangemax):
     mf.close()
 
 if __name__ == '__main__':
-    makeMacFromRange2('00:11:ad:83:%02x:%02x\n',['9c','c0'],1011)
+    makeMacFromRange2('00:11:ad:83:%02x:%02x\n',['a0','b3'],1010)
