@@ -4,6 +4,103 @@ import web
 import sys
 import os
 
+class stalkerDB:
+    def loadCfg(self,types):
+        for itype in types:
+            self.loadmac( itype )
+            self.loadid( itype )
+
+    def loadmac( self, itype ):
+            filename = './macCfg/'+itype+'/macfile'
+            macfile = open( filename )
+            
+            if macfile == None:
+                return
+            
+            setattr(self,itype+'_macarr',[])
+            macarr = getattr(self,itype+'_macarr')
+            while 1:
+                line = macfile.readline()
+                if not line:
+                    break
+                if len(line) < 2:
+                    continue
+                line = line.replace("\n", "")
+                line = line.replace("\r", "")
+                if len(line) < 2:
+                    continue
+                macarr.append(line)
+            print 'loadmac macarr : ', macarr
+            macfile.close()
+
+    def loadid( self, itype ):
+            filename = './macCfg/'+itype+'/idfile'
+            mapfile = open( filename )
+            
+            if mapfile == None:
+                return
+            
+            setattr(self,itype+'_mapdict',{})
+            mapdict = getattr(self,itype+'_mapdict')
+            while 1:
+                line = mapfile.readline()
+                if not line:
+                    break
+
+                line = line.replace('\n','')
+                line = line.replace('\r','')
+                devicInfo = line.split(';')
+                if len(devicInfo) < 2:
+                    continue
+
+                mapdict[devicInfo[0]] = devicInfo[1]
+
+            mapfile.close()
+
+    def hasMac( self, itype, mac ):
+        macarr = getattr(self,itype+'_macarr')
+
+        if macarr == None:
+            return False
+
+        if mac in macarr:
+            return True
+
+        return False
+        
+
+    def findId( self, itype, mac ):
+        mapdict = getattr(self,itype+'_mapdict')
+
+        if mapdict == None:
+            return ''
+
+        if mac in mapdict.keys():
+            return mapdict[mac]
+        
+        return ''
+
+    def saveId( self, itype, mac, id ):
+        macarr = getattr(self,itype+'_macarr')
+        mapdict = getattr(self,itype+'_mapdict')
+
+        if macarr == None:
+            return False
+        
+        if mapdict == None:
+            return False
+
+        mapdict[mac] = id
+
+        filename = './macCfg/'+itype+'/idfile'
+        authfile = open(filename,'a' )
+        authfile.write( mac+';'+id+'\n' )
+        authfile.close()
+        return True
+
+stalker_db = stalkerDB()
+stalker_db.loadCfg(['stalker'])
+
 class cmd:
     def __init__( self ):
         self.loadMacData()
@@ -201,6 +298,7 @@ class request:
 class reponseCmd:
     def response(self,request):
         requestitems = request.split(';')
+        print '[reponseCmd.response] requestitems : ', requestitems
         if hasattr( self, requestitems[0] ):
             operator = getattr(self,requestitems[0])
             if len(requestitems) < 2:
@@ -216,6 +314,26 @@ class reponseCmd:
             retstr = macConfigs.getnewid( self.deviceType, param[0] )
         return retstr
 
+
+    def authorize2(self,param):
+        global stalker_db
+        print 'authorize2 param : ', param
+        if len(param) < 2:
+            print 'authorize2 len(param) < 2'
+            return ''
+
+        hasmac = stalker_db.hasMac( self.deviceType, param[0] )
+        if hasmac == False:
+            print 'authorize2 hasmac == False'
+            return ''
+			
+        retstr = stalker_db.findId( self.deviceType, param[0] )
+        if retstr == '':
+            retstr = param[1]
+            stalker_db.saveId(self.deviceType, param[0], retstr)
+        print 'authorize2 retstr : ', retstr
+        return retstr
+
 class U51Cmd(reponseCmd):
     def __init__(self):
         self.deviceType = 'u51'
@@ -226,7 +344,30 @@ class U51Cmd(reponseCmd):
         if len(cmdparse) == 2:
            return self.response(cmdparse[1])
 
-requrls = ('/u51/(.*)','U51Cmd','/(.*)','request')
+class stalkerRequest(reponseCmd):
+    def __init__(self):
+        self.deviceType = 'stalker'
+
+    def GET(self, argv):
+        print __file__.split('\\')[-1],' stalker cmd argv ',argv
+        cmdparse = argv.split(':')
+        print 'stalkerRequest len(cmdparse) : ', len(cmdparse)
+        if len(cmdparse) == 2:
+           return self.response(cmdparse[1])
+        
+        if len(cmdparse) > 2:
+            param = None
+            for item in cmdparse[1:]:
+                if param == None:
+                    param = item
+                else:
+                    param += ':'+item
+
+            return self.response(param)
+
+        return None			
+
+requrls = ('/stalker/(.*)','stalkerRequest','/u51/(.*)','U51Cmd','/(.*)','request')
 
 reqk_app = web.application(requrls, locals())
 
