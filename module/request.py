@@ -322,15 +322,15 @@ class reponseCmd:
             print 'authorize2 len(param) < 2'
             return ''
 
-        hasmac = stalker_db.hasMac( self.deviceType, param[0] )
+        hasmac = stalker_db.hasMac( self.deviceType, param[0].upper() )
         if hasmac == False:
             print 'authorize2 hasmac == False'
             return ''
 			
-        retstr = stalker_db.findId( self.deviceType, param[0] )
+        retstr = stalker_db.findId( self.deviceType, param[0].upper() )
         if retstr == '':
             retstr = param[1]
-            stalker_db.saveId(self.deviceType, param[0], retstr)
+            stalker_db.saveId(self.deviceType, param[0].upper(), retstr)
         print 'authorize2 retstr : ', retstr
         return retstr
 
